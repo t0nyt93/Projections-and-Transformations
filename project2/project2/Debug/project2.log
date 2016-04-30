@@ -1,0 +1,68 @@
+﻿  matlib.cpp
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(64): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(65): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(66): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(152): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(153): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(154): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(160): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(165): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(168): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(173): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(187): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(193): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(199): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(206): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(207): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(208): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  mat4.cpp
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(26): warning C4101: 'k': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(42): warning C4101: 'k': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(42): warning C4101: 'j': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(73): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(75): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(77): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(79): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(87): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(89): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(91): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(67): warning C4101: 'k': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(149): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(153): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(157): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(161): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(141): warning C4101: 'k': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(194): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(198): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(206): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(210): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(186): warning C4101: 'k': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(242): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(246): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(250): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(254): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(233): warning C4101: 'k': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(274): warning C4101: 'k': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\mat4.cpp(300): warning C4101: 'k': unreferenced local variable
+  lines.cpp
+c:\users\anthony\desktop\cs451\cs451-project2\lines.cpp(72): warning C4101: 'r0': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\lines.cpp(73): warning C4101: 'r1': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\lines.cpp(73): warning C4101: 'g1': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\lines.cpp(72): warning C4101: 'b0': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\lines.cpp(73): warning C4101: 'b1': unreferenced local variable
+c:\users\anthony\desktop\cs451\cs451-project2\lines.cpp(72): warning C4101: 'g0': unreferenced local variable
+  draw.cpp
+  Generating Code...
+  osuGraphics.c
+c:\users\anthony\desktop\cs451\cs451-project2\osugraphics.c(211): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\osugraphics.c(236): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\osugraphics.c(262): warning C4028: formal parameter 1 different from declaration
+mat4.obj : error LNK2019: unresolved external symbol "public: __thiscall Vec3::Vec3(float,float,float)" (??0Vec3@@QAE@MMM@Z) referenced in function "public: class Vec3 __thiscall Mat4::operator*(class Vec3 &)" (??DMat4@@QAE?AVVec3@@AAV1@@Z)
+matlib.obj : error LNK2001: unresolved external symbol "public: __thiscall Vec3::Vec3(float,float,float)" (??0Vec3@@QAE@MMM@Z)
+matlib.obj : error LNK2019: unresolved external symbol _osuColor3f referenced in function "void __cdecl osuBegin(enum OSUDrawable)" (?osuBegin@@YAXW4OSUDrawable@@@Z)
+matlib.obj : error LNK2019: unresolved external symbol "public: class Vec3 & __thiscall Vec3::operator=(class Vec3 const &)" (??4Vec3@@QAEAAV0@ABV0@@Z) referenced in function _osuEnd
+matlib.obj : error LNK2019: unresolved external symbol "public: class Vec3 __thiscall Vec3::operator-(class Vec3 const &)" (??GVec3@@QAE?AV0@ABV0@@Z) referenced in function _osuEnd
+matlib.obj : error LNK2019: unresolved external symbol "public: class Vec3 __thiscall Vec3::Cross(class Vec3 &)" (?Cross@Vec3@@QAE?AV1@AAV1@@Z) referenced in function _osuEnd
+matlib.obj : error LNK2019: unresolved external symbol "public: float __thiscall Vec3::Dot(class Vec3 &)" (?Dot@Vec3@@QAEMAAV1@@Z) referenced in function _osuEnd
+matlib.obj : error LNK2019: unresolved external symbol "public: float __thiscall Vec3::Length(void)" (?Length@Vec3@@QAEMXZ) referenced in function _osuEnd
+C:\Users\Anthony\Desktop\cs451\cs451-project2\project2\Debug\project2.exe : fatal error LNK1120: 7 unresolved externals

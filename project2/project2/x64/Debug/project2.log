@@ -1,0 +1,14 @@
+﻿  matlib.cpp
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(60): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(77): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(78): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(79): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(317): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(322): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(327): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(328): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(329): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(339): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(340): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\desktop\cs451\cs451-project2\matlib.cpp(341): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  project2.vcxproj -> C:\Users\Anthony\Desktop\cs451\cs451-project2\project2\x64\Debug\project2.exe
