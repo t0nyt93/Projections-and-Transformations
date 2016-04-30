@@ -239,6 +239,7 @@ void osuVertex3f(double x, double y, double z)
 	{
 		lDraw.one.intialized = 1;
 		lDraw.one.pos = Vec3((float)x,(float)y,(float)z);
+		//lDraw.one.pos.Print();
 	}
 	else if (lDraw.two.intialized == 0)
 	{
@@ -246,17 +247,30 @@ void osuVertex3f(double x, double y, double z)
 		osuGetFramebufferSize(&w, &h);
 		lDraw.two.intialized = 1;
 		lDraw.two.pos = Vec3((float)x,(float)y,(float)z);
+		//lDraw.two.pos.Print();
 		Vec3 p1, p2;
 		float x0, y0, x1, y1;
 		//If we need to perform a orthographic projection
 		if ((ORTHO == TRUE) && (PROJECTION == FALSE))
 		{
-			p1 =(orthoProj *((Current_Transform * lDraw.one.pos)));
-			p2 =(orthoProj *((Current_Transform * lDraw.two.pos)));
-			x0 = p1.x; y0 = p1.y; x1 = p2.x; y1 = p2.y;
-			printf("O:Tried to draw a line %f %f %f %f...\n",x0*w,y0*h,x1*w,y1*h);
+			p1 =(orthoProj *(myView * (Current_Transform * lDraw.one.pos)));
+			p2 =(orthoProj *(myView * (Current_Transform * lDraw.two.pos)));
+			printf("My Ortho:\n");
+			orthoProj.Print();
+			printf("My View\n");
+			myView.Print();
+			printf("My Transform\n");
+			Current_Transform.Print();
+			printf("My vertex\n");
+			p1.Print();
+			p2.Print();
 
-			draw_line(x0*w, y0*h, x1*w, y1*h);
+			x0 = p1.x; y0 = p1.y; x1 = p2.x; y1 = p2.y;
+			//double ar = w / h;
+			//x0 = p1.x * w; y0 = p1.y * h; x1 = p2.x * w; y1 = p2.y * h;
+
+			printf("Tried to draw a line: %f %f %f %f\n", x0, y0, x1, y1);
+			draw_line(x0, y0, x1, y1);
 		}
 		//We need to perform a perspective projection
 		else if ((PROJECTION == TRUE) && (ORTHO == FALSE))
@@ -264,7 +278,6 @@ void osuVertex3f(double x, double y, double z)
 			p1 = persProj * ((Current_Transform) * lDraw.one.pos);
 			p2 = persProj * ((Current_Transform) * lDraw.two.pos);
 			x0 = p1.x; y0 = p1.y; x1 = p2.x; y1 = p2.y;
-			printf("P:Tried to draw a line %f-%f %f-%f...\n",x0*w,y0*h,x1*w,y1*h);
 
 			draw_line(x0*w, y0*h, x1*w, y1*h);
 		}
@@ -334,21 +347,16 @@ void osuLookat(double from[3], double at[3], double up[3])
 {
 	//From = vector specifying direction from which the viewer would like to view the scene.
 	//myView.SetTranslate(-from[0], -from[1], -from[2]);
-	Vec3 fVec, aVec, uVec,e,v, w;
+	Vec3 fVec, aVec, uVec,xAx,yAx, zAx;
 	
 	fVec = Vec3(from[0], from[1], from[2]);
 	uVec = Vec3(up[0], up[1], up[2]);
 	aVec = Vec3(at[0], at[1], at[2]);
-	e = fVec;
-	v = uVec - fVec;
-	w = fVec - aVec;
+	zAx = (fVec - aVec);
+	xAx = uVec.Cross(zAx);
+	yAx = zAx.Cross(xAx);
 	
-	v = v.Unit();
-	w = w.Unit();
-	u = v.Cross(w);
-
-
-	myView.SetCamera(u);
+	myView.SetCamera(xAx,yAx,zAx,fVec);
 
 }
 
@@ -367,7 +375,7 @@ void osuBegin(OSUDrawable mode)
 		printf("Time for vertexes\n");
 
 		lDraw = {};
-		double f[3] = {0.0,0.0,1.0}, a[3] = {0.,0.,1. }, myUp[3] = { 0.,0.,1. };
+		double f[3] = {0.0,0.0,-1.0}, a[3] = {0.,0.,0. }, myUp[3] = { 0.,1.,0. };
 		osuLookat(f, a, myUp);
 	}
 }

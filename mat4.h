@@ -28,7 +28,7 @@ class Mat4
 	void	SetTranslate( float, float, float );
 	void    SetOrthoGraphic(float,float,float,float,float,float);
 	void    SetPerspective(double,double,double);
-	void	SetCamera(Vec3);
+	void	SetCamera(Vec3,Vec3,Vec3,Vec3);
 };
 
 #ifndef D2R

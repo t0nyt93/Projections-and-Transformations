@@ -111,7 +111,6 @@ void
 Mat4::SetRotateZ( float deg )
 {
 	// "this" is a pointer to this class's mat4  (this->name)
-	this->SetIdentity();
 	float rad = D2R * deg;
 	m[0][0] = m[1][1] = cos(rad);
 	m[0][1] = -sin(rad);
@@ -121,7 +120,6 @@ Mat4::SetRotateZ( float deg )
 void
 Mat4::SetRotateY( float deg )
 {
-	this->SetIdentity();
 	float rad = D2R * deg;
 	m[0][0] = m[2][2] = cos(rad);
 	m[0][2] = sin(rad);
@@ -133,7 +131,6 @@ void
 Mat4::SetRotateX( float deg )
 {
 
-	this->SetIdentity();
 	float rad = D2R * deg;
 	m[1][1] = m[2][2] = cos(rad);
 	m[1][2] = -sin(rad);
@@ -155,10 +152,11 @@ Mat4::SetScale( float sx, float sy, float sz )
 void
 Mat4::SetOrthoGraphic(float l,float r, float t, float b, float n, float f)
 {
-	m[0][0] = 1. / r;	m[0][1] = 0.;	m[0][2] = 0.;	m[0][3] = 0.;//-((r + l) / (r - l));
-	m[1][0] = 0.;	m[1][1] = 1. / t;	m[1][2] = 0.;	m[1][3] = 0.;// -((t + b) / (t - b));
-	m[2][0] = 0.;	m[2][1] = 0.;	m[2][2] = -2/(f-n);	m[2][3] = -((f+n)/(f-n));
-	m[3][0] = 0.;	m[3][1] = 0.;	m[3][2] = 0.;	m[3][3] = 1.;
+	//Supposedly simplified and working?
+	m[0][0] = 2./(r-l);		m[0][1] = 0.;			m[0][2] = 0.;			m[0][3] = -((r+l)/(r-l));
+	m[1][0] = 0.;			m[1][1] = 2./(t-b);		m[1][2] = 0.;			m[1][3] = -((t+b)/(t-b));
+	m[2][0] = 0.;			m[2][1] = 0.;			m[2][2] = -(2./(f-n));	m[2][3] = -((f+n)/(f-n));
+	m[3][0] = 0.;			m[3][1] = 0.;			m[3][2] = 0.;			m[3][3] = 1.;
 
 }
 void
@@ -183,12 +181,20 @@ Mat4::SetTranslate( float tx, float ty, float tz )
 
 }
 void
-Mat4::SetCamera(Vec3 U)
+Mat4::SetCamera(Vec3 xAxis, Vec3 yAxis, Vec3 zAxis,Vec3 eye)
 {
+	//Colum Major...
 
-	m[0][0] = U.x;	m[0][1] = 0.;	m[0][2] = 0.;	m[0][3] = 0.;
-	m[1][0] = 0.;	m[1][1] = U.y;	m[1][2] = 0.;	m[1][3] = 0.;
-	m[2][0] = 0.;	m[2][1] = 0.;	m[2][2] = U.z;	m[2][3] = 0.;
+	m[0][0] = xAxis.x;	m[0][1] = xAxis.y;	m[0][2] = xAxis.z;	m[0][3] = -(eye.Dot(xAxis));
+	m[1][0] = yAxis.x;	m[1][1] = yAxis.y;	m[1][2] = yAxis.z;	m[1][3] = -(eye.Dot(yAxis));
+	m[2][0] = zAxis.x;	m[2][1] = zAxis.y;	m[2][2] = zAxis.z;	m[2][3] = -(eye.Dot(zAxis));
 	m[3][0] = 0.;	m[3][1] = 0.;	m[3][2] = 0.;	m[3][3] = 1.;
+	
 
+	//Row Major
+	/*m[0][0] = xAxis.x;	m[0][1] = yAxis.x;	m[0][2] = zAxis.x;	m[0][3] = 0.;
+	m[1][0] = xAxis.y;	m[1][1] = yAxis.y;	m[1][2] = zAxis.y;	m[1][3] = 0.;
+	m[2][0] = xAxis.z;	m[2][1] = yAxis.z;	m[2][2] = zAxis.z;	m[2][3] = 0.;
+	m[3][0] = -(eye.Dot(xAxis));	m[3][1] = -(eye.Dot(yAxis));	m[3][2] = -(eye.Dot(zAxis));	m[3][3] = 1.;
+	*/
 }
