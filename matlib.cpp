@@ -248,21 +248,26 @@ void osuVertex3f(double x, double y, double z)
 		lDraw.two.pos = Vec3((float)x,(float)y,(float)z);
 		Vec3 p1, p2;
 		float x0, y0, x1, y1;
+		Mat4 ModelViewMat;
 		//If we need to perform a orthographic projection
 		if ((ORTHO == TRUE) && (PROJECTION == FALSE))
 		{
-			p1 =(orthoProj *((Current_Transform * lDraw.one.pos)));
-			p2 =(orthoProj *((Current_Transform * lDraw.two.pos)));
-			x0 = p1.x; y0 = p1.y; x1 = p2.x; y1 = p2.y;
-			printf("O:Tried to draw a line %f %f %f %f...\n",x0*w,y0*h,x1*w,y1*h);
+			ModelViewMat = myView * Current_Transform;
+			
+			p1 =(orthoProj *(ModelViewMat * lDraw.one.pos));
+			p2 =(orthoProj *(ModelViewMat * lDraw.two.pos));
+			x0 = p1.x * w; y0 = p1.y * h; x1 = p2.x * w; y1 = p2.y * h;
+			printf("O:Tried to draw a line %f %f %f %f...\n",x0,y0,x1,y1);
 
-			draw_line(x0*w, y0*h, x1*w, y1*h);
+			draw_line(x0, y0, x1, y1);
 		}
 		//We need to perform a perspective projection
 		else if ((PROJECTION == TRUE) && (ORTHO == FALSE))
 		{
-			p1 = persProj * ((Current_Transform) * lDraw.one.pos);
-			p2 = persProj * ((Current_Transform) * lDraw.two.pos);
+			ModelViewMat = myView * Current_Transform;
+			p1 = (persProj *(ModelViewMat * lDraw.one.pos));
+			p2 = (persProj *(ModelViewMat * lDraw.two.pos));
+			p1.Print();
 			x0 = p1.x; y0 = p1.y; x1 = p2.x; y1 = p2.y;
 			printf("P:Tried to draw a line %f-%f %f-%f...\n",x0*w,y0*h,x1*w,y1*h);
 
@@ -281,6 +286,7 @@ void osuInitialize()
 	//Create an identity matrix and push it on the stack
 	Mat4 transformMat = Mat4();
 	Current_Transform = transformMat;
+	transformMat.SetIdentity();
 	printf("Pushing identity Matrix onto the matStack.\n");
 	matStack.push(transformMat);
 
@@ -291,7 +297,7 @@ void osuPushMatrix()
 { 
 	Mat4 newTop = Mat4(matStack.front());
 	Current_Transform = newTop;
-	matStack.push(newTop);
+	matStack.push(Current_Transform);
 }
 
 void osuPopMatrix() 
@@ -314,19 +320,57 @@ void osuLoadIdentityMatrix()
 }
 void osuTranslate(double tx, double ty, double tz) 
 { 
-	Current_Transform.SetTranslate(tx, ty, tz);
+	Mat4 t = Mat4();
+	t.SetTranslate(tx, ty, tz);
+	Current_Transform = Current_Transform * t;
 }
 
 void osuScale(double sx, double sy, double sz) 
 { 
-	Current_Transform.SetScale(sx, sy, sz);
+	Mat4 s = Mat4();
+	s.SetScale(sx, sy, sz);
+	Current_Transform = Current_Transform * s;
 }
 
 void osuRotate(double angle, double ax, double ay, double az) { 
 	
-	Current_Transform.SetRotateX(angle);
-	Current_Transform.SetRotateY(angle);
-	Current_Transform.SetRotateZ(angle);
+
+	Mat4 t, r;
+	if (ax > 0.)
+	{
+		r.SetRotateX(angle);
+		Current_Transform = Current_Transform * r;
+	}
+	if (ay > 0.)
+	{
+		r.SetRotateX(angle);
+		Current_Transform = Current_Transform * r;
+	}
+	if (az > 0.)
+	{
+		r.SetRotateZ(angle);
+		Current_Transform = Current_Transform * r;
+	}
+	/*t.SetTranslate(-ax, -ay, -az);
+	Current_Transform = Current_Transform * t;
+		//Rotate by x
+		r.SetRotateX(angle);
+		Current_Transform = Current_Transform * r;
+		//Rotate by Y
+		r.SetRotateY(angle);
+		Current_Transform = Current_Transform * r;
+		//Rotate by Z
+		r.SetRotateZ(angle);
+		Current_Transform = Current_Transform * r;
+		//Undo Y rotation
+		r.SetRotateY(-angle);
+		Current_Transform = Current_Transform * r;
+		//Undo X rotation
+		r.SetRotateX(-angle);
+		Current_Transform = Current_Transform * r;
+		//Untranslate...
+	t.SetTranslate(ax, ay, az);
+	Current_Transform = Current_Transform * t;*/
 		
 }
 
@@ -334,22 +378,21 @@ void osuLookat(double from[3], double at[3], double up[3])
 {
 	//From = vector specifying direction from which the viewer would like to view the scene.
 	//myView.SetTranslate(-from[0], -from[1], -from[2]);
-	Vec3 fVec, aVec, uVec,e,v, w;
+	Vec3 fVec, aVec, uVec,u,v,n;
 	
 	fVec = Vec3(from[0], from[1], from[2]);
 	uVec = Vec3(up[0], up[1], up[2]);
 	aVec = Vec3(at[0], at[1], at[2]);
-	e = fVec;
-	v = uVec - fVec;
-	w = fVec - aVec;
-	
-	v = v.Unit();
-	w = w.Unit();
-	u = v.Cross(w);
+	n = (fVec - aVec);
+	n = n.Unit();
+	u = uVec.Cross(n);
+	u = u.Unit();
+	v = n.Cross(u);
 
-
-	myView.SetCamera(u);
-
+	myView.SetCamera(u,v,n,fVec);
+	Mat4 t;
+	t.SetTranslate(-fVec.x, -fVec.y, -fVec.z);
+	myView = myView * t;
 }
 
 void osuBegin(OSUDrawable mode)
@@ -367,7 +410,10 @@ void osuBegin(OSUDrawable mode)
 		printf("Time for vertexes\n");
 
 		lDraw = {};
-		double f[3] = {0.0,0.0,1.0}, a[3] = {0.,0.,1. }, myUp[3] = { 0.,0.,1. };
+		double f[3] = {.5,0.5,3.5}, a[3] = {0.,0.,0. }, myUp[3] = { 0.,3.,0. };
+		//double f[3] = {-5,-5,-5}, a[3] = {0.,0.,0. }, myUp[3] = { 0.,2.,0. };
+
 		osuLookat(f, a, myUp);
+
 	}
 }

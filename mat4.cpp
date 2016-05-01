@@ -132,7 +132,6 @@ Mat4::SetRotateY( float deg )
 void
 Mat4::SetRotateX( float deg )
 {
-
 	this->SetIdentity();
 	float rad = D2R * deg;
 	m[1][1] = m[2][2] = cos(rad);
@@ -146,10 +145,11 @@ Mat4::SetRotateX( float deg )
 void
 Mat4::SetScale( float sx, float sy, float sz )
 {
+	this->SetIdentity();
 	// "this" is a pointer to this class's mat4  (this->name)
-	m[0][0] *= sx;
-	m[1][1] *= sy;
-	m[2][2] *= sz;
+	m[0][0] = sx;
+	m[1][1] = sy;
+	m[2][2] = sz;
 	//this->m ???
 }
 void
@@ -159,6 +159,12 @@ Mat4::SetOrthoGraphic(float l,float r, float t, float b, float n, float f)
 	m[1][0] = 0.;	m[1][1] = 1. / t;	m[1][2] = 0.;	m[1][3] = 0.;// -((t + b) / (t - b));
 	m[2][0] = 0.;	m[2][1] = 0.;	m[2][2] = -2/(f-n);	m[2][3] = -((f+n)/(f-n));
 	m[3][0] = 0.;	m[3][1] = 0.;	m[3][2] = 0.;	m[3][3] = 1.;
+	//Supposedly simplified and working?
+	/*m[0][0] = 2. / (r - l);		m[0][1] = 0.;			m[0][2] = 0.;			m[0][3] = -((r + l) / (r - l));
+	m[1][0] = 0.;			m[1][1] = 2. / (t - b);		m[1][2] = 0.;			m[1][3] = -((t + b) / (t - b));
+	m[2][0] = 0.;			m[2][1] = 0.;			m[2][2] = -(2. / (f - n));	m[2][3] = -((f + n) / (f - n));
+	m[3][0] = 0.;			m[3][1] = 0.;			m[3][2] = 0.;			m[3][3] = 1.;*/
+
 
 }
 void
@@ -167,7 +173,7 @@ Mat4::SetPerspective(double a, double nZ, double fZ)
 	a *= D2R;
 	m[0][0] = 1. /tan(a/2.) ;	m[0][1] = 0.;	m[0][2] = 0.;	m[0][3] = 0.;
 	m[1][0] = 0.;	m[1][1] = 1/tan(a/2.);	m[1][2] = 0.;	m[1][3] = 0.;
-	m[2][0] = 0.;	m[2][1] = 0.;	m[2][2] = (-nZ-fZ)/nZ-fZ;	m[2][3] = (2. * nZ * fZ)/(nZ - fZ);
+	m[2][0] = 0.;	m[2][1] = 0.;	m[2][2] = (-nZ-fZ)/(nZ-fZ);	m[2][3] = (2. * nZ * fZ)/(nZ - fZ);
 	m[3][0] = 0.;	m[3][1] = 0.;	m[3][2] = 1.;	m[3][3] = 0.;
 
 }
@@ -176,19 +182,20 @@ void
 Mat4::SetTranslate( float tx, float ty, float tz )
 {
 	// "this" is a pointer to this class's mat4  (this->name)
-
+	this->SetIdentity();
 	m[0][3] = tx;
 	m[1][3] = ty;
 	m[2][3] = tz;
 
 }
 void
-Mat4::SetCamera(Vec3 U)
+Mat4::SetCamera(Vec3 u, Vec3 v, Vec3 n, Vec3 eye)
 {
+	//Row Major
 
-	m[0][0] = U.x;	m[0][1] = 0.;	m[0][2] = 0.;	m[0][3] = 0.;
-	m[1][0] = 0.;	m[1][1] = U.y;	m[1][2] = 0.;	m[1][3] = 0.;
-	m[2][0] = 0.;	m[2][1] = 0.;	m[2][2] = U.z;	m[2][3] = 0.;
+	m[0][0] = u.x;	m[0][1] = u.y;	m[0][2] = u.z;	m[0][3] = 0.;
+	m[1][0] = v.x;	m[1][1] = v.y;	m[1][2] = v.z;	m[1][3] = 0.;
+	m[2][0] = n.x;	m[2][1] = n.y;	m[2][2] = n.z;	m[2][3] = 0.;
 	m[3][0] = 0.;	m[3][1] = 0.;	m[3][2] = 0.;	m[3][3] = 1.;
 
 }
