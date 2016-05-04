@@ -1,1 +1,14 @@
-﻿  project2.vcxproj -> C:\Users\tony.tyrrell\Desktop\Here\project2\x64\Debug\project2.exe
+﻿  matlib.cpp
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(96): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(97): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(98): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(359): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(366): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(376): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(381): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(386): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(418): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(419): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anthony\source\repos\projections-and-transformations\matlib.cpp(420): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  project2.vcxproj -> C:\Users\Anthony\Source\Repos\Projections-and-Transformations\project2\x64\Debug\project2.exe

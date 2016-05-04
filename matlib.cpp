@@ -19,6 +19,8 @@ These are for you to write!
 #include "lines.h"
 #include "vec3.h"
 #include "mat4.h"
+ 
+double NP, FP;
 //-------------------------------------------------
 
 //------Data Structures ------------
@@ -56,7 +58,8 @@ Mat4 myView = Mat4();
 //-------------------
 void osuOrtho(double left, double right, double bottom, double top, double nearp,double farp)
 { 
-	
+	NP = nearp;
+	FP = farp;
 	orthoProj.SetOrthoGraphic(left, right, top, bottom, nearp, farp);
 	printf("Set Ortho graphic\n");
 	orthoProj.Print();
@@ -65,7 +68,23 @@ void osuOrtho(double left, double right, double bottom, double top, double nearp
 }
 void osuPerspective(double fovy, double nearp, double farp) 
 {
-	persProj.SetPerspective(fovy, nearp, farp);
+	NP = nearp;
+	FP = farp;
+	int w, h, ar;
+	osuGetFramebufferSize(&w, &h);
+	ar = w / h;
+	double pi = 3.1415926535;
+	double angle = (pi / 180.) * fovy;
+	/*double l, r, t, b, pi = 3.1415926535;
+	
+	t = nearp *  tan((pi / 180.) * (fovy / 2.));
+	b = -t;
+	r = t * ar;
+	l = -r;*/
+	printf("t %8.2f b%8.2f a %8.2f\n",angle,nearp,farp);
+	persProj.SetPerspective(angle,nearp,farp);
+	printf("Perspective Mat set\n");
+	persProj.Print();
 	PROJECTION = TRUE;
 	ORTHO = FALSE;
 }
@@ -154,7 +173,8 @@ void osuVertex2f(double x, double y)
 //All vertices of the polygon have been given so draw it and write them to the framebuffer. 
 void osuEnd()
 {
-	printf("Drawing is over?\n");
+	printf("Drawing is over?\n"); \
+	lDraw = {};
 	//We're drawing lines now, not triangles.
 
 	/*Vec3 myN, myNQ, myNR, myNS;
@@ -247,36 +267,51 @@ void osuVertex3f(double x, double y, double z)
 		lDraw.two.intialized = 1;
 		lDraw.two.pos = Vec3((float)x,(float)y,(float)z);
 		Vec3 p1, p2;
-		float x0, y0, x1, y1;
+		double x0, y0, x1, y1,z0,z1;
 		Mat4 ModelViewMat;
 		//If we need to perform a orthographic projection
 		if ((ORTHO == TRUE) && (PROJECTION == FALSE))
 		{
 			ModelViewMat = myView * Current_Transform;
 			
-			p1 =(orthoProj *(ModelViewMat * lDraw.one.pos));
-			p2 =(orthoProj *(ModelViewMat * lDraw.two.pos));
-			x0 = p1.x * w; y0 = p1.y * h; x1 = p2.x * w; y1 = p2.y * h;
-			printf("O:Tried to draw a line %f %f %f %f...\n",x0,y0,x1,y1);
+			p1 =orthoProj * ModelViewMat * lDraw.one.pos;
+			p2 =orthoProj * ModelViewMat * lDraw.two.pos;
 
+			x0 = (double)p1.x * w, y0 = (double)p1.y * h, z0 = (double)abs(p1.z * (FP-NP));
+			x1 = (double)p2.x * w, y1 = (double)p2.y * h, z1 = (double)abs(p2.z * (FP - NP));
+
+			/*if (near_far_clip(NP, FP, &x0, &y0, &z0, &x1, &y1, &z1) != 0)
+			{
+				draw_line(x0 , y0 , x1 , y1 );
+			}*/
 			draw_line(x0, y0, x1, y1);
+			//x0 = p1.x ; y0 = p1.y; x1 = p2.x; y1 = p2.y;
+
+		
 		}
 		//We need to perform a perspective projection
 		else if ((PROJECTION == TRUE) && (ORTHO == FALSE))
 		{
+			Current_Transform.Print();
 			ModelViewMat = myView * Current_Transform;
-			p1 = (persProj *(ModelViewMat * lDraw.one.pos));
-			p2 = (persProj *(ModelViewMat * lDraw.two.pos));
-			p1.Print();
-			x0 = p1.x; y0 = p1.y; x1 = p2.x; y1 = p2.y;
-			printf("P:Tried to draw a line %f-%f %f-%f...\n",x0*w,y0*h,x1*w,y1*h);
 
-			draw_line(x0*w, y0*h, x1*w, y1*h);
+
+			p1 = persProj *ModelViewMat * lDraw.one.pos;
+			p2 = persProj *ModelViewMat * lDraw.two.pos;
+
+			x0 = (double)p1.x, y0 = (double)p1.y, z0 = (double)p1.z;
+			x1 = (double)p2.x, y1 = (double)p2.y, z1 = (double)p2.z; 
+			printf("Clipping line %8.2f %8.2f %8.2f %8.2f %8.2f %8.2f\n",x0,y0,z0,x1,y1,z1);
+
+			if (near_far_clip(NP, FP, &x0, &y0, &z0, &x1, &y1, &z1) != 0)
+			{
+				printf("Drawing line %8.2f %8.2f\n", x0,x1);
+				draw_line(x0, y0, x1, y1);
+			}
 		}
 		//Something got messed up.
 		else
 			printf("Neither a project or Orthographic was given, or BOTH we're given concurrently.\n");
-		lDraw = {};
 	}
 	
 }
@@ -382,17 +417,23 @@ void osuLookat(double from[3], double at[3], double up[3])
 	
 	fVec = Vec3(from[0], from[1], from[2]);
 	uVec = Vec3(up[0], up[1], up[2]);
-	aVec = Vec3(at[0], at[1], at[2]);
-	n = (fVec - aVec);
-	n = n.Unit();
-	u = uVec.Cross(n);
-	u = u.Unit();
+	aVec = Vec3(at[0], at[1], at[2]);;
+	n = aVec.Unit();
+	u = uVec.Unit();
+	u = u.Cross(n);
 	v = n.Cross(u);
+	
 
-	myView.SetCamera(u,v,n,fVec);
-	Mat4 t;
-	t.SetTranslate(-fVec.x, -fVec.y, -fVec.z);
-	myView = myView * t;
+	Mat4 ViewTranslation, ViewRotation;
+	ViewTranslation.SetTranslate(-fVec.x, -fVec.y, -fVec.z);
+	ViewRotation.SetCamera(u,v,n,fVec);
+	printf("R");
+	ViewRotation.Print();
+	printf("T\n");
+	ViewTranslation.Print();
+	myView = ViewRotation * ViewTranslation; 
+	myView.Print();
+	//t.SetTranslate(-fVec.x, -fVec.y, -fVec.z);
 }
 
 void osuBegin(OSUDrawable mode)
@@ -410,9 +451,9 @@ void osuBegin(OSUDrawable mode)
 		printf("Time for vertexes\n");
 
 		lDraw = {};
-		double f[3] = {.5,0.5,3.5}, a[3] = {0.,0.,0. }, myUp[3] = { 0.,3.,0. };
-		//double f[3] = {-5,-5,-5}, a[3] = {0.,0.,0. }, myUp[3] = { 0.,2.,0. };
-
+		double f[3] = {0.,0.0,-1.}, a[3] = {0,0,0. }, myUp[3] = { 0.,1.,0. };
+		//double f[3] = {50.,0.,0.}, a[3] = {-20,-50,5.0 }, myUp[3] = { 0.,5.,0. };
+		
 		osuLookat(f, a, myUp);
 
 	}
